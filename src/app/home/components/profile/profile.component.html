@@ -1,0 +1,16 @@
+<div class="profile-container" *ngIf="profileData">
+  <mat-card>
+    <mat-card-title class="mat-card-title">>> Me</mat-card-title>
+    <mat-card-content class="info-container">
+      <div class="image-container">
+        <div class="image">{{ profileData.display_name.slice(0, 1) }}</div>
+      </div>
+      <div class="information">
+        <h2 class="no-margin">{{ profileData.display_name }}</h2>
+        <h3 class="no-margin">{{ profileData.email }}</h3>
+        <h4 class="no-margin">{{ profileData.country }}</h4>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<app-spinner [showSpinner]="!profileData"></app-spinner>

@@ -1,0 +1,41 @@
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 76px);
+  flex-direction: column;
+
+  .mat-card-title {
+    padding: 24px 24px 0px 24px;
+  }
+
+  .info-container {
+    display: flex;
+    flex-direction: row;
+    padding: 12px;
+    padding-bottom: 24px;
+
+    .image-container {
+      padding-inline: 24px;
+
+      .image {
+        background-color: rgb(206, 33, 6);
+        width: 84px;
+        height: 84px;
+        font-size: 44px;
+        border-radius: 50%;
+        font-weight: bolder;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .information {
+      padding-right: 24px;
+    }
+  }
+}
+.no-margin {
+  margin: 0px;
+}

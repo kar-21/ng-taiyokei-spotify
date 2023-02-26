@@ -1,0 +1,28 @@
+.container {
+  height: calc(100vh - 124px);
+  margin-inline: 16px;
+
+  .title {
+    text-align: center;
+    font-size: xxx-large;
+    line-height: initial;
+  }
+
+  .genre-container {
+    height: calc(100vh - 198px);
+    overflow: auto;
+    margin-inline: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    .genre {
+      display: flex;
+      align-items: center;
+
+      .icon {
+        margin-right: 8px;
+      }
+    }
+  }
+}

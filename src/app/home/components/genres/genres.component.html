@@ -1,0 +1,14 @@
+<div class="container">
+  <h1 class="title">Genres</h1>
+  <mat-chip-listbox class="genre-container" *ngIf="genres">
+    <mat-chip
+      *ngFor="let genre of genres"
+      [ngStyle]="{ backgroundColor: genre.color }"
+    >
+      <div class="genre">
+        <mat-icon class="icon">library_music</mat-icon>{{ genre.name }}
+      </div>
+    </mat-chip>
+  </mat-chip-listbox>
+  <app-spinner [showSpinner]="!genres"></app-spinner>
+</div>
