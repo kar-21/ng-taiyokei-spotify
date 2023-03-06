@@ -8,13 +8,17 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 import { ToolBarComponent } from './components/tool-bar/tool-bar.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { CardComponent } from './components/card/card.component';
+import { EmbeddedPlayerComponent } from './components/embedded-player/embedded-player.component';
 
 @NgModule({
-  declarations: [ToolBarComponent, SpinnerComponent, CardComponent],
+  declarations: [ToolBarComponent, SpinnerComponent, CardComponent, EmbeddedPlayerComponent],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -25,6 +29,9 @@ import { CardComponent } from './components/card/card.component';
     MatCardModule,
     MatChipsModule,
     MatTabsModule,
+    MatSidenavModule,
+    MatListModule,
+    MatGridListModule,
   ],
   exports: [
     MatToolbarModule,
@@ -35,10 +42,14 @@ import { CardComponent } from './components/card/card.component';
     MatCardModule,
     MatChipsModule,
     MatTabsModule,
+    MatSidenavModule,
+    MatListModule,
+    MatGridListModule,
 
     ToolBarComponent,
     SpinnerComponent,
     CardComponent,
+    EmbeddedPlayerComponent
   ],
 })
 export class SharedModule {}

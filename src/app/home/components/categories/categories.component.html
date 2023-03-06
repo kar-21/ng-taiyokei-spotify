@@ -1,0 +1,29 @@
+<div class="container">
+  <h1 class="title">Categories</h1>
+  <mat-grid-list
+    cols="5"
+    rowHeight="70px"
+    class="categories-container"
+    *ngIf="categories"
+  >
+    <mat-grid-tile
+      class="category-grid"
+      *ngFor="let category of categories"
+      [colspan]="1"
+    >
+      <button
+        class="category"
+        (click)="onCategoryClick(category.id, category.name)"
+      >
+        <img
+          class="image"
+          [src]="category.icons[0].url"
+          height="50"
+          width="50"
+        />
+        <h1>{{ category.name }}</h1>
+      </button>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <app-spinner [showSpinner]="!categories"></app-spinner>
+</div>

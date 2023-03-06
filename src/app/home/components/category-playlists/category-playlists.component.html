@@ -1,0 +1,29 @@
+<div class="container">
+  <h1 class="title">{{ category }}</h1>
+  <mat-grid-list
+    cols="3"
+    rowHeight="70px"
+    class="playlists-container"
+    *ngIf="categoryPlaylist"
+  >
+    <mat-grid-tile
+      class="playlist-grid"
+      *ngFor="let playlist of categoryPlaylist"
+      [colspan]="1"
+    >
+      <button class="playlist" (click)="onPlaylistSelect(playlist.id, playlist.name)">
+        <img
+          class="image"
+          [src]="playlist.images[0].url"
+          height="50"
+          width="50"
+        />
+        <div class="playlist-info">
+          <h1 class="no-margin">{{ playlist.name }}</h1>
+          <p class="no-margin">{{ playlist.description }}</p>
+        </div>
+      </button>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <app-spinner [showSpinner]="!categoryPlaylist"></app-spinner>
+</div>

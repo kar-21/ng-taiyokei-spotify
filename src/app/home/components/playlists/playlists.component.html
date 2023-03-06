@@ -1,0 +1,38 @@
+<div class="container">
+  <h1 class="title">{{ playlistName }}</h1>
+  <mat-grid-list
+    cols="2"
+    rowHeight="120px"
+    class="playlists-container"
+    *ngIf="playlist"
+  >
+    <mat-grid-tile
+      class="playlist-grid"
+      *ngFor="let playlist of playlist"
+      [colspan]="1"
+    >
+      <button class="playlist" (click)="onTrackClicked(playlist.track.uri)">
+        <img
+          class="image"
+          [src]="playlist.track.album.images[0].url"
+          height="100"
+          width="100"
+        />
+        <div class="playlist-info">
+          <h1 class="no-margin">{{ playlist.track.name }}</h1>
+          <p class="no-margin">from Album {{ playlist.track.album.name }}</p>
+          <p class="no-margin">
+            by -
+            {{ getArtistsName(playlist.track.artists) }}
+          </p>
+          <p class="no-margin">
+            Popularity -
+            {{ playlist.track.popularity }}
+          </p>
+          <p class="no-margin">added at {{ playlist.added_at }}</p>
+        </div>
+      </button>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <app-spinner [showSpinner]="!playlist"></app-spinner>
+</div>

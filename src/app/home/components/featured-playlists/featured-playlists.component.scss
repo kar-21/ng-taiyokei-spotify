@@ -8,21 +8,28 @@
     line-height: initial;
   }
 
-  .genre-container {
+  .playlists-container {
     height: calc(100vh - 150px);
     overflow: auto;
     margin-inline: 16px;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
 
-    .genre {
+    .playlist {
       display: flex;
       align-items: center;
+      margin: 8px;
+      padding: 12px;
+      background-color: initial;
+      color: white;
+      border: none;
+      cursor: pointer;
 
-      .icon {
+      .image {
         margin-right: 8px;
       }
+    }
+
+    .playlist-grid:hover {
+      background-image: linear-gradient(to left, #3a6186, #89253e);
     }
   }
 }
