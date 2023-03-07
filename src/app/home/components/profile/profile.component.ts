@@ -1,5 +1,10 @@
+import { selectUserProfile } from './../../../store/selectors/userProfile.selector';
 import { Component } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+
 import { ProfileModel } from 'src/app/model/profile.model';
+import { IAppState } from 'src/app/store/states/app.state';
+import { getUserProfile } from './../../../store/actions/userProfile.action';
 import { ProfileService } from '../../services/profile.service';
 
 @Component({
@@ -9,12 +14,14 @@ import { ProfileService } from '../../services/profile.service';
 })
 export class ProfileComponent {
   profileData: ProfileModel = {} as ProfileModel;
-  constructor(private profileService: ProfileService) {
+
+  constructor(private store: Store<IAppState>) {
     const token = sessionStorage.getItem('token');
-    if (token)
-      this.profileService.getProfile(token).subscribe((data: ProfileModel) => {
-        this.profileData = data;
-        console.log('>>>>>', data);
+    if (token) this.store.dispatch(getUserProfile({ token: token }));
+    this.store
+      .pipe(select(selectUserProfile))
+      .subscribe((profileData: ProfileModel) => {
+        this.profileData = profileData;
       });
   }
 }
