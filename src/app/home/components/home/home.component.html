@@ -8,7 +8,7 @@
           [ngClass]="{
             'highlight-route': routePath === '/'
           }"
-          >Genres</mat-list-item
+          >Featured Playlists</mat-list-item
         >
       </a>
       <a routerLink="/categories" class="routerLink">
@@ -21,17 +21,22 @@
           >Categories</mat-list-item
         >
       </a>
-      <a routerLink="/featured-playlists" class="routerLink">
+      <a routerLink="/genres" class="routerLink">
         <mat-list-item
           role="listitem"
           class="listItem"
           [ngClass]="{
-            'highlight-route': routePath === '/featured-playlists'
+            'highlight-route': routePath === '/genres'
           }"
-          >Featured Playlists</mat-list-item
+          >Genres</mat-list-item
         >
       </a>
     </mat-list>
   </mat-drawer>
-  <mat-drawer-content><router-outlet></router-outlet> </mat-drawer-content>
+  <mat-drawer-content>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
+    <app-embedded-player></app-embedded-player
+  ></mat-drawer-content>
 </mat-drawer-container>

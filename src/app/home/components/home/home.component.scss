@@ -9,3 +9,8 @@
 .highlight-route {
   background-image: linear-gradient(to left, #3a6186, #89253e);
 }
+
+.main-content {
+  height: calc(100vh - 162px);
+  overflow: auto;
+}

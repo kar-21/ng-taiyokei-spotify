@@ -1,5 +1,4 @@
 .container {
-  height: calc(100vh - 76px);
   margin-inline: 16px;
 
   .title {
@@ -9,8 +8,6 @@
   }
 
   .genre-container {
-    height: calc(100vh - 150px);
-    overflow: auto;
     margin-inline: 16px;
     display: flex;
     flex-direction: column;

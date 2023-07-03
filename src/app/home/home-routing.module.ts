@@ -14,9 +14,9 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     children: [
-      { path: '', component: GenresComponent },
+      { path: '', component: FeaturedPlaylistsComponent },
       { path: 'categories', component: CategoriesComponent },
-      { path: 'featured-playlists', component: FeaturedPlaylistsComponent },
+      { path: 'genres', component: GenresComponent },
       { path: 'category-playlists', component: CategoryPlaylistsComponent },
       { path: 'playlists', component: PlaylistsComponent },
     ],

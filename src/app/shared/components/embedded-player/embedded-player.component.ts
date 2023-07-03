@@ -7,10 +7,10 @@ import { Component, Input, OnChanges } from '@angular/core';
 })
 export class EmbeddedPlayerComponent {
   trackUri = '';
-  embedController: any = ''
+  embedController: any = '';
   @Input() set setTrackUri(trackUri: string) {
     this.trackUri = trackUri;
-    this.embedController?.loadUri(trackUri)
+    this.embedController?.loadUri(trackUri);
   }
 
   constructor() {
@@ -19,6 +19,7 @@ export class EmbeddedPlayerComponent {
       console.log('>>>>>> element', element);
       let options = {
         uri: 'spotify:episode:6I3ZzCxRhRkNqnQNo8AZPV',
+        height: '80',
       };
       let callback = (EmbedController: any) => {
         this.embedController = EmbedController;

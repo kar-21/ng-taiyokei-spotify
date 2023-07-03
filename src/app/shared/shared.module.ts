@@ -11,6 +11,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { ToolBarComponent } from './components/tool-bar/tool-bar.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
@@ -18,7 +19,12 @@ import { CardComponent } from './components/card/card.component';
 import { EmbeddedPlayerComponent } from './components/embedded-player/embedded-player.component';
 
 @NgModule({
-  declarations: [ToolBarComponent, SpinnerComponent, CardComponent, EmbeddedPlayerComponent],
+  declarations: [
+    ToolBarComponent,
+    SpinnerComponent,
+    CardComponent,
+    EmbeddedPlayerComponent,
+  ],
   imports: [
     CommonModule,
     MatToolbarModule,
@@ -32,6 +38,7 @@ import { EmbeddedPlayerComponent } from './components/embedded-player/embedded-p
     MatSidenavModule,
     MatListModule,
     MatGridListModule,
+    MatDialogModule,
   ],
   exports: [
     MatToolbarModule,
@@ -45,11 +52,12 @@ import { EmbeddedPlayerComponent } from './components/embedded-player/embedded-p
     MatSidenavModule,
     MatListModule,
     MatGridListModule,
+    MatDialogModule,
 
     ToolBarComponent,
     SpinnerComponent,
     CardComponent,
-    EmbeddedPlayerComponent
+    EmbeddedPlayerComponent,
   ],
 })
 export class SharedModule {}
