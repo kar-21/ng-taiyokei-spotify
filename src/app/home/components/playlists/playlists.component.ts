@@ -1,10 +1,16 @@
-import { ArtistModel, Track } from './../../../model/playlist.model';
 import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
+import { Store, select } from '@ngrx/store';
 
-import { Playlists } from './../../../model/browse.model';
-import { PlaylistService } from '../../services/playlist.service';
-import { PlaylistApi, PlaylistItems } from 'src/app/model/playlist.model';
+import { PlaylistItems } from 'src/app/model/playlist.model';
+import { IAppState } from 'src/app/store/states/app.state';
+import { getTracks, resetTracks } from 'src/app/store/actions/tracks.action';
+import { selectTracks } from 'src/app/store/selectors/tracks.selector';
+import { ITracksState } from 'src/app/store/states/tracks.state';
+import { setSelectedTrackUri } from './../../../store/actions/selectedItem.action';
+
+import { ArtistModel } from './../../../model/playlist.model';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'app-playlists',
@@ -15,37 +21,35 @@ export class PlaylistsComponent {
   playlist: PlaylistItems[] = [];
   playlistName: string = '';
   total = 0;
-  trackUri: string = '';
+  previous = 0;
 
   constructor(
-    private playlistService: PlaylistService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store<IAppState>,
+    private breadcrumbService: BreadcrumbService
   ) {
-    const token = sessionStorage.getItem('token');
-    const playlistId = this.route.snapshot.queryParamMap.get('playlistId');
+    const playlistId =
+      this.route.snapshot.queryParamMap.get('playlistId') || '';
     this.playlistName =
       this.route.snapshot.queryParamMap.get('playlistName') || '';
-    console.log('>>>>>>> playlistId playlistName', {
-      playlistId,
-      playlistName: this.playlistName,
-    });
-    if (token && playlistId) {
-      this.getPlaylist(token, playlistId, 0);
-    }
-  }
 
-  getPlaylist = (token: string, playlistId: string, offset: number) => {
-    this.playlistService
-      .getPlaylists(token, playlistId, offset)
-      .subscribe((data: PlaylistApi) => {
-        console.log('>>>>>>> playlist', data);
-        this.total = data.total;
-        this.playlist = [...this.playlist, ...data.items];
-        if (this.total !== 0 && offset + data.limit < this.total) {
-          this.getPlaylist(token, playlistId, offset + data.limit);
-        }
-      });
-  };
+    this.breadcrumbService.set('@playlists', this.playlistName);
+
+    if (this.previous === 0) {
+      this.store.dispatch(resetTracks());
+      this.store.dispatch(getTracks({ playlistId, previous: 0 }));
+    }
+    this.store.pipe(select(selectTracks)).subscribe((tracks: ITracksState) => {
+      if (this.previous !== 0 && tracks.previous < tracks.total) {
+        this.store.dispatch(
+          getTracks({ playlistId, previous: tracks.previous })
+        );
+      }
+      this.playlist = tracks.tracks;
+      this.total = tracks.total;
+      this.previous = tracks.previous;
+    });
+  }
 
   getArtistsName = (artists: ArtistModel[]) => {
     let artistNames = '';
@@ -57,7 +61,6 @@ export class PlaylistsComponent {
   };
 
   onTrackClicked = (trackUri: string) => {
-    console.log('>>>>>>> trackId', trackUri);
-    this.trackUri = trackUri;
+    this.store.dispatch(setSelectedTrackUri({ trackUri }));
   };
 }

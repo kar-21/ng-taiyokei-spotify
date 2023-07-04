@@ -1,9 +1,15 @@
 import { Router } from '@angular/router';
-import { Categories } from './../../../model/browse.model';
+import { select, Store } from '@ngrx/store';
 import { Component } from '@angular/core';
-import { CategoriesApiModel } from 'src/app/model/browse.model';
 
-import { BrowseService } from '../../services/browse.service';
+import { IAppState } from 'src/app/store/states/app.state';
+import { ICategoriesState } from 'src/app/store/states/categories.state';
+import { selectCategories } from 'src/app/store/selectors/categories.selector';
+import {
+  getCategories,
+  resetCategories,
+} from 'src/app/store/actions/categories.action';
+import { Categories } from 'src/app/model/browse.model';
 
 @Component({
   selector: 'app-categories',
@@ -11,28 +17,32 @@ import { BrowseService } from '../../services/browse.service';
   styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent {
-  categories: Categories[] = [];
+  categories = [] as Categories[];
   total = 0;
+  previous = 0;
 
-  constructor(private browseService: BrowseService, private router: Router) {
-    const token = sessionStorage.getItem('token');
-    if (token) {
-      this.getCategories(token, 0);
+  constructor(private router: Router, private store: Store<IAppState>) {
+    if (this.previous === 0) {
+      this.store.dispatch(resetCategories());
+      this.store.dispatch(getCategories({ previous: 0 }));
     }
-  }
 
-  getCategories = (token: string, offset: number) => {
-    this.browseService
-      .getCategories(token, offset)
-      .subscribe((data: CategoriesApiModel) => {
-        console.log('>>>>>', data);
-        this.total = data.categories.total;
-        this.categories = [...this.categories, ...data.categories.items];
-        if (this.total !== 0 && offset + data.categories.limit < this.total) {
-          this.getCategories(token, offset + data.categories.limit);
+    this.store
+      .pipe(select(selectCategories))
+      .subscribe((categoriesState: ICategoriesState) => {
+        this.categories = categoriesState.categories;
+        this.total = categoriesState.total;
+        this.previous = categoriesState.previous;
+        if (
+          categoriesState.previous !== 0 &&
+          categoriesState.previous < categoriesState.total
+        ) {
+          this.store.dispatch(
+            getCategories({ previous: categoriesState.previous })
+          );
         }
       });
-  };
+  }
 
   onCategoryClick = (categoryId: string, categoryName: string) => {
     console.log('>>>>> getCategoryPlaylist', categoryId);

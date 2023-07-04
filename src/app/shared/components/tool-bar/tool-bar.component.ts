@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Component } from '@angular/core';
 
 @Component({
@@ -8,10 +8,16 @@ import { Component } from '@angular/core';
 })
 export class ToolBarComponent {
   isLoggedIn: boolean = false;
+  routePath = '';
   constructor(private router: Router) {
     if (sessionStorage.getItem('token')) {
       this.isLoggedIn = true;
     }
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.routePath = event.url;
+      }
+    });
   }
 
   handleLoginClick = () => {

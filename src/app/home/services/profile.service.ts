@@ -12,8 +12,7 @@ export class ProfileService {
 
   getProfile = (token: string): Observable<ProfileModel> => {
     return this.http.get<ProfileModel>(
-      `${environment.backendUrl}userProfile/me`,
-      { headers: { Authorization: `Bearer ${token}` } }
+      `${environment.backendUrl}userProfile/me`
     );
   };
 }

@@ -4,6 +4,8 @@ import { Component } from '@angular/core';
 import { FeaturedPlaylistsApiModel } from 'src/app/model/browse.model';
 import { Playlists } from './../../../model/browse.model';
 import { BrowseService } from '../../services/browse.service';
+import { IAppState } from 'src/app/store/states/app.state';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-featured-playlists',
@@ -14,16 +16,17 @@ export class FeaturedPlaylistsComponent {
   featuredPlaylist: Playlists[] = [];
   total = 0;
 
-  constructor(private browseService: BrowseService, private router: Router) {
-    const token = sessionStorage.getItem('token');
-    if (token) {
-      this.getFeaturedPlaylist(token, 0);
-    }
+  constructor(
+    private browseService: BrowseService,
+    private router: Router,
+    private store: Store<IAppState>
+  ) {
+   
   }
 
   getFeaturedPlaylist = (token: string, offset: number) => {
     this.browseService
-      .getFeaturePlaylists(token, offset)
+      .getFeaturePlaylists(offset)
       .subscribe((data: FeaturedPlaylistsApiModel) => {
         console.log('>>>>>', data);
         this.total = data.playlists.total;

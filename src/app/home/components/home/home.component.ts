@@ -1,15 +1,19 @@
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Component } from '@angular/core';
-import { filter } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   routePath = '';
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private breadcrumbService: BreadcrumbService
+  ) {
     this.route.url.subscribe((event) => {
       console.log(event);
     });
@@ -17,6 +21,12 @@ export class HomeComponent {
       if (event instanceof NavigationEnd) {
         this.routePath = event.url;
       }
+    });
+  }
+
+  ngOnInit() {
+   this.breadcrumbService.breadcrumbs$.subscribe(value => {
+    console.log('>>>>> bread', value)
     });
   }
 }

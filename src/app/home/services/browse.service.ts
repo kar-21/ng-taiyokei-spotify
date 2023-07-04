@@ -17,34 +17,25 @@ export class BrowseService {
 
   getAvailableGenre = (token: string): Observable<AvailableGenreModel> => {
     return this.http.get<AvailableGenreModel>(
-      `${environment.backendUrl}browse/available-genre`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
+      `${environment.backendUrl}browse/available-genre`
     );
   };
 
   getCategories = (
-    token: string,
     offset: number
   ): Observable<CategoriesApiModel> => {
     return this.http.get<CategoriesApiModel>(
-      `${environment.backendUrl}browse/categories?offset=${offset}`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
+      `${environment.backendUrl}browse/categories?offset=${offset}`
     );
   };
 
   getCategoryPlaylist = (
-    token: string,
     categoryId: string,
     offset: number
   ): Observable<FeaturedPlaylistsApiModel> => {
     return this.http.get<FeaturedPlaylistsApiModel>(
       `${environment.backendUrl}browse/category/playlists`,
       {
-        headers: { Authorization: `Bearer ${token}` },
         params: {
           categoryId,
           offset,
@@ -54,14 +45,10 @@ export class BrowseService {
   };
 
   getFeaturePlaylists = (
-    token: string,
     offset: number
   ): Observable<FeaturedPlaylistsApiModel> => {
     return this.http.get<FeaturedPlaylistsApiModel>(
-      `${environment.backendUrl}browse/featured-playlists`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
+      `${environment.backendUrl}browse/featured-playlists`
     );
   };
 }

@@ -5,8 +5,8 @@ import { LoginRedirectComponent } from './components/login-redirect/login-redire
 import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'redirectURI', component: LoginRedirectComponent },
+  { path: '', component: LoginComponent, data: { breadcrumb: 'Login' }, },
+  { path: 'redirectURI', component: LoginRedirectComponent,data: { breadcrumb: 'Redirect URL' }, },
 ];
 
 @NgModule({

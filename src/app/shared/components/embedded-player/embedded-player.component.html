@@ -1,1 +1,3 @@
-<div id="embed-iframe" class="embed-iframe"></div>
+<div [ngClass]="{ 'hide-embedded': routePath === '/login' }">
+  <div id="embed-iframe" class="embed-iframe"></div>
+</div>

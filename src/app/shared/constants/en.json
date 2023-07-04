@@ -1,0 +1,6 @@
+{
+  "httpInterceptor": {
+    "defaultError": "Ops! Something went wrong",
+    "unauthorized": "401: Unauthorized request"
+  }
+}

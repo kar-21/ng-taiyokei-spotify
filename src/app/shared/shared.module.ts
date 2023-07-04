@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
@@ -12,11 +12,14 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { ToolBarComponent } from './components/tool-bar/tool-bar.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { CardComponent } from './components/card/card.component';
 import { EmbeddedPlayerComponent } from './components/embedded-player/embedded-player.component';
+import { HttpInterceptorService } from './interceptor/http-interceptor.service';
+import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,7 @@ import { EmbeddedPlayerComponent } from './components/embedded-player/embedded-p
     SpinnerComponent,
     CardComponent,
     EmbeddedPlayerComponent,
+    SnackBarComponent,
   ],
   imports: [
     CommonModule,
@@ -39,6 +43,7 @@ import { EmbeddedPlayerComponent } from './components/embedded-player/embedded-p
     MatListModule,
     MatGridListModule,
     MatDialogModule,
+    MatSnackBarModule,
   ],
   exports: [
     MatToolbarModule,
@@ -53,11 +58,20 @@ import { EmbeddedPlayerComponent } from './components/embedded-player/embedded-p
     MatListModule,
     MatGridListModule,
     MatDialogModule,
+    MatSnackBarModule,
 
     ToolBarComponent,
     SpinnerComponent,
     CardComponent,
     EmbeddedPlayerComponent,
+    SnackBarComponent,
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true,
+    },
   ],
 })
 export class SharedModule {}
