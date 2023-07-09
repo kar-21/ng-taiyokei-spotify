@@ -30,7 +30,6 @@ export class LoginRedirectComponent {
         })
       );
       this.router.navigateByUrl('');
-      // setTimeout(() => window.location.href = `http://localhost:4200`)
     });
   }
 }

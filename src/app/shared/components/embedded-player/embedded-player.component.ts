@@ -1,5 +1,5 @@
-import { Component, Input, OnChanges } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, Input } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-embedded-player',
@@ -30,6 +30,11 @@ export class EmbeddedPlayerComponent {
       };
       let callback = (EmbedController: any) => {
         this.embedController = EmbedController;
+        const iframeElement = document.querySelector('iframe');
+        iframeElement?.setAttribute(
+          'allow',
+          'autoplay; clipboard-write; encrypted-media *; fullscreen; picture-in-picture'
+        );
       };
       IFrameAPI.createController(element, options, callback);
     };

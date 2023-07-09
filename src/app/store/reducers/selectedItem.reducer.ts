@@ -3,7 +3,7 @@ import { initialSelectedItemState } from '../states/selectedItem.state';
 import * as SelectedItemActions from '../actions/selectedItem.action';
 
 export const selectedItemReducer = createReducer(
-    initialSelectedItemState,
+  initialSelectedItemState,
   on(SelectedItemActions.setSelectedTrackUri, (state, { trackUri }) => ({
     ...state,
     trackUri,
