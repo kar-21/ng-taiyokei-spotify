@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   apiUrl: 'http://my-api-url',
-  backendUrl: 'http://localhost:2000/'
+  backendUrl: 'https://ex-taiyokei-spotify.onrender.com/'
 };
