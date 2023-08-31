@@ -1,5 +1,8 @@
 <mat-drawer-container class="example-container">
-  <mat-drawer mode="side" opened>
+  <mat-drawer
+    [mode]="isMobilePhone ? 'over' : 'side'"
+    [opened]="isMobilePhone ? false : true"
+  >
     <mat-list role="list">
       <a routerLink="/" class="routerLink">
         <mat-list-item

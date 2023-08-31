@@ -1,7 +1,4 @@
 .container {
-  height: calc(100vh - 64px);
-  margin-inline: 16px;
-
   .title {
     text-align: center;
     font-size: xxx-large;
@@ -9,23 +6,23 @@
   }
 
   .categories-container {
-    height: calc(100vh - 150px);
     overflow: auto;
-    margin-inline: 16px;
 
-    .category {
-      display: flex;
-      align-items: center;
-      margin: 8px;
-      padding: 12px;
-      background-color: initial;
-      color: white;
-      border: none;
-      cursor: pointer;
-      width: 100%;
+    .category-grid {
+      .category {
+        display: flex;
+        align-items: center;
+        margin: 8px;
+        padding: 12px;
+        background-color: initial;
+        color: white;
+        border: none;
+        cursor: pointer;
+        width: 100%;
 
-      .image {
-        margin-right: 8px;
+        .image {
+          margin-right: 8px;
+        }
       }
     }
 

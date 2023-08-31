@@ -10,7 +10,6 @@ import { Store, select } from '@ngrx/store';
 import {
   switchMap,
   catchError,
-  BehaviorSubject,
   throwError,
   Observable,
   ReplaySubject,
@@ -28,11 +27,6 @@ import { setToken } from 'src/app/store/actions/userProfile.action';
   providedIn: 'root',
 })
 export class HttpInterceptorService implements HttpInterceptor {
-  private isRefreshing = false;
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(
-    null
-  );
-
   constructor(
     private store: Store<IAppState>,
     private loginService: LoginService,
@@ -57,7 +51,9 @@ export class HttpInterceptorService implements HttpInterceptor {
         .refreshToken(token.refresh_token)
         .subscribe((tokenParams: TokenModal) => {
           const expiresDate = new Date();
-          expiresDate.setSeconds(expiresDate.getSeconds() + tokenParams['expires_in'] -  60);
+          expiresDate.setSeconds(
+            expiresDate.getSeconds() + tokenParams['expires_in'] - 60
+          );
           this.store.dispatch(
             setToken({
               access_token: tokenParams['access_token'],
@@ -90,27 +86,34 @@ export class HttpInterceptorService implements HttpInterceptor {
     error: HttpErrorResponse
   ) {
     if (!request.url.includes('login')) {
-      if (!this.isRefreshing) {
-        this.isRefreshing = true;
-        this.refreshTokenSubject.next(null);
-      }
       const token = getValue(this.store.pipe(select(selectToken)));
+      console.log('>>>>> token>>>', token);
       if (token) {
-        return (
-          this.loginService
-            .refreshToken(token.refresh_token)
-            .subscribe((token: TokenModal) => {
-              this.isRefreshing = false;
-              this.refreshTokenSubject.next(token);
-              this.addBearerToken(request, token).subscribe((request) => {
-                next.handle(request);
-              });
-            }),
-          catchError((error) => {
-            this.isRefreshing = false;
-            return throwError(() => new Error(error));
-          })
-        );
+        return this.loginService
+          .refreshToken(token.refresh_token)
+          .pipe(
+            catchError((error) => {
+              return throwError(() => new Error(error));
+            })
+          )
+          .subscribe((tokenParams: TokenModal) => {
+            const expiresDate = new Date();
+            expiresDate.setSeconds(
+              expiresDate.getSeconds() + tokenParams['expires_in'] - 60
+            );
+            this.store.dispatch(
+              setToken({
+                access_token: tokenParams['access_token'],
+                scope: tokenParams['scope'],
+                token_type: tokenParams['token_type'],
+                refresh_token: tokenParams['refresh_token'],
+                expires_in: expiresDate.getTime(),
+              })
+            );
+            this.addBearerToken(request, tokenParams).subscribe((request) => {
+              next.handle(request);
+            });
+          });
       } else {
         this.openErrorSnackbar(`${HttpStatusCode.Unauthorized}: Unauthorized`);
         return throwError(() => new Error(error.message));
@@ -129,7 +132,7 @@ export class HttpInterceptorService implements HttpInterceptor {
     if (error instanceof HttpErrorResponse) {
       switch (error.status) {
         case HttpStatusCode.Unauthorized:
-          // return this.handleUnauthorizedError(request, next, error);
+          return this.handleUnauthorizedError(request, next, error);
         default:
           this.openErrorSnackbar(
             `${HttpStatusCode.InternalServerError}: Unauthorized`

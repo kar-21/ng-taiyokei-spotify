@@ -1,16 +1,16 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
 import { Store, select } from '@ngrx/store';
+import { BreadcrumbService } from 'xng-breadcrumb';
 
 import { PlaylistItems } from 'src/app/model/playlist.model';
 import { IAppState } from 'src/app/store/states/app.state';
 import { getTracks, resetTracks } from 'src/app/store/actions/tracks.action';
 import { selectTracks } from 'src/app/store/selectors/tracks.selector';
 import { ITracksState } from 'src/app/store/states/tracks.state';
-import { setSelectedTrackUri } from './../../../store/actions/selectedItem.action';
 
 import { ArtistModel } from './../../../model/playlist.model';
-import { BreadcrumbService } from 'xng-breadcrumb';
+import { setSelectedTrackUri } from 'src/app/store/actions/selectedItem.action';
 
 @Component({
   selector: 'app-playlists',

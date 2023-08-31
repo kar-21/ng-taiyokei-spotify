@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 import { IAppState } from 'src/app/store/states/app.state';
 import { ICategoriesState } from 'src/app/store/states/categories.state';
@@ -16,12 +17,16 @@ import { Categories } from 'src/app/model/browse.model';
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss'],
 })
-export class CategoriesComponent {
+export class CategoriesComponent implements OnInit {
   categories = [] as Categories[];
   total = 0;
   previous = 0;
 
-  constructor(private router: Router, private store: Store<IAppState>) {
+  constructor(
+    private router: Router,
+    private store: Store<IAppState>,
+    private breakpointObserver: BreakpointObserver
+  ) {
     if (this.previous === 0) {
       this.store.dispatch(resetCategories());
       this.store.dispatch(getCategories({ previous: 0 }));
@@ -43,6 +48,8 @@ export class CategoriesComponent {
         }
       });
   }
+
+  ngOnInit() {}
 
   onCategoryClick = (categoryId: string, categoryName: string) => {
     console.log('>>>>> getCategoryPlaylist', categoryId);

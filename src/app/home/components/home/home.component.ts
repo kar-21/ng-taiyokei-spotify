@@ -1,6 +1,12 @@
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import {
+  BreakpointObserver,
+  BreakpointState,
+  Breakpoints,
+  MediaMatcher,
+} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-home',
@@ -9,10 +15,13 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 })
 export class HomeComponent implements OnInit {
   routePath = '';
+  isMobilePhone = false;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private breadcrumbService: BreadcrumbService
+    private breadcrumbService: BreadcrumbService,
+    private breakpointObserver: BreakpointObserver
   ) {
     this.route.url.subscribe((event) => {
       console.log(event);
@@ -22,11 +31,17 @@ export class HomeComponent implements OnInit {
         this.routePath = event.url;
       }
     });
+
+    this.breakpointObserver
+      .observe([Breakpoints.Handset])
+      .subscribe((result: BreakpointState) => {
+        this.isMobilePhone = result.matches;
+      });
   }
 
   ngOnInit() {
-   this.breadcrumbService.breadcrumbs$.subscribe(value => {
-    console.log('>>>>> bread', value)
+    this.breadcrumbService.breadcrumbs$.subscribe((value) => {
+      console.log('>>>>> bread', value);
     });
   }
 }

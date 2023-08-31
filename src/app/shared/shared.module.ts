@@ -13,6 +13,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { ToolBarComponent } from './components/tool-bar/tool-bar.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
@@ -44,6 +45,7 @@ import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
     MatGridListModule,
     MatDialogModule,
     MatSnackBarModule,
+    FlexLayoutModule,
   ],
   exports: [
     MatToolbarModule,
@@ -59,6 +61,7 @@ import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
     MatGridListModule,
     MatDialogModule,
     MatSnackBarModule,
+    FlexLayoutModule,
 
     ToolBarComponent,
     SpinnerComponent,
