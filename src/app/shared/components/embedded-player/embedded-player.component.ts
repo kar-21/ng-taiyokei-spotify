@@ -1,7 +1,5 @@
-import { Store } from '@ngrx/store';
 import { Component, Input } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { IAppState } from 'src/app/store/states/app.state';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
@@ -14,13 +12,17 @@ export class EmbeddedPlayerComponent {
   embedController: any = '';
   routePath = '';
   token = '';
+  loading = true;
   @Input() set setTrackUri(trackUri: string) {
     this.trackUri = this.domSanitizer.bypassSecurityTrustResourceUrl(trackUri);
     this.embedController?.loadUri && this.embedController.loadUri(trackUri);
     this.embedController?.play && this.embedController?.play();
   }
 
-  constructor(private router: Router, private store: Store<IAppState>, private domSanitizer: DomSanitizer) {
+  constructor(
+    private router: Router,
+    private domSanitizer: DomSanitizer
+  ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.routePath = event.url;
@@ -34,12 +36,15 @@ export class EmbeddedPlayerComponent {
         height: '80',
       };
       let callback = (EmbedController: any) => {
-        this.embedController = EmbedController;
         const iframeElement = document.querySelector('iframe');
         iframeElement?.setAttribute(
           'allow',
           'autoplay; clipboard-write; encrypted-media *; fullscreen; picture-in-picture'
         );
+        this.embedController = EmbedController;
+        EmbedController.addListener('ready', () => {
+          this.loading = false;
+        });
       };
       IFrameAPI.createController(element, options, callback);
     };

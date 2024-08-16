@@ -21,6 +21,7 @@ import { CardComponent } from './components/card/card.component';
 import { EmbeddedPlayerComponent } from './components/embedded-player/embedded-player.component';
 import { HttpInterceptorService } from './interceptor/http-interceptor.service';
 import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
+import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
     MatDialogModule,
     MatSnackBarModule,
     FlexLayoutModule,
+    LayoutModule
   ],
   exports: [
     MatToolbarModule,
@@ -62,6 +64,7 @@ import { SnackBarComponent } from './components/snack-bar/snack-bar.component';
     MatDialogModule,
     MatSnackBarModule,
     FlexLayoutModule,
+    LayoutModule,
 
     ToolBarComponent,
     SpinnerComponent,

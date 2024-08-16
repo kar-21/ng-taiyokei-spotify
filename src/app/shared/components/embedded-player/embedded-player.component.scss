@@ -4,3 +4,18 @@
 .hide-embedded {
   display: none;
 }
+.embedded {
+  height: 86px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.disable-loading {
+  height: unset;
+  display: unset;
+  justify-content: unset;
+  align-items: unset;
+}
+.header {
+  position: fixed;
+}

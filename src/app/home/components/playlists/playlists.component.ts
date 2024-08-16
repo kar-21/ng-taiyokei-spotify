@@ -11,6 +11,11 @@ import { ITracksState } from 'src/app/store/states/tracks.state';
 
 import { ArtistModel } from './../../../model/playlist.model';
 import { setSelectedTrackUri } from 'src/app/store/actions/selectedItem.action';
+import {
+  BreakpointObserver,
+  BreakpointState,
+  Breakpoints,
+} from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-playlists',
@@ -22,11 +27,13 @@ export class PlaylistsComponent {
   playlistName: string = '';
   total = 0;
   previous = 0;
+  isMobileScreen = false;
 
   constructor(
     private route: ActivatedRoute,
     private store: Store<IAppState>,
-    private breadcrumbService: BreadcrumbService
+    private breadcrumbService: BreadcrumbService,
+    public breakpointObserver: BreakpointObserver
   ) {
     const playlistId =
       this.route.snapshot.queryParamMap.get('playlistId') || '';
@@ -49,6 +56,12 @@ export class PlaylistsComponent {
       this.total = tracks.total;
       this.previous = tracks.previous;
     });
+
+    this.breakpointObserver
+      .observe([Breakpoints.Small, Breakpoints.XSmall, Breakpoints.Handset])
+      .subscribe((state: BreakpointState) => {
+        this.isMobileScreen = state.matches;
+      });
   }
 
   getArtistsName = (artists: ArtistModel[]) => {

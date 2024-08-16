@@ -26,5 +26,9 @@ export const userProfileReducer = createReducer(
         refresh_token,
       },
     })
-  )
+  ),
+  on(UserProfileActions.resetToken, (state) => ({
+    ...state,
+    token: initialUserProfileState.token,
+  }))
 );

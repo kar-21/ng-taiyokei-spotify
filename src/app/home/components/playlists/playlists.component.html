@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="title">{{ playlistName }}</h1>
   <mat-grid-list
-    cols="2"
+    cols="{{ isMobileScreen ? 1 : 2 }}"
     rowHeight="120px"
     class="playlists-container"
     *ngIf="playlist"

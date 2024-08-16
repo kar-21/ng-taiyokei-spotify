@@ -1,3 +1,10 @@
-<div [ngClass]="{ 'hide-embedded': routePath === '/login' }">
+<div
+  class="embedded"
+  [ngClass]="{
+    'hide-embedded': routePath === '/login',
+    'disable-loading': embedController
+  }"
+>
   <div id="embed-iframe" class="embed-iframe"></div>
+  <h3 class="header" *ngIf="!embedController">Loading...</h3>
 </div>

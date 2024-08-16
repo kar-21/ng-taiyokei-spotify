@@ -21,7 +21,7 @@ import { IAppState } from 'src/app/store/states/app.state';
 import { getValue } from '../utilities/getValue.utility';
 import { LoginService } from './../../login/services/login.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { setToken } from 'src/app/store/actions/userProfile.action';
+import { resetToken, setToken } from 'src/app/store/actions/userProfile.action';
 
 @Injectable({
   providedIn: 'root',
@@ -115,6 +115,7 @@ export class HttpInterceptorService implements HttpInterceptor {
             });
           });
       } else {
+        this.store.dispatch(resetToken());
         this.openErrorSnackbar(`${HttpStatusCode.Unauthorized}: Unauthorized`);
         return throwError(() => new Error(error.message));
       }
